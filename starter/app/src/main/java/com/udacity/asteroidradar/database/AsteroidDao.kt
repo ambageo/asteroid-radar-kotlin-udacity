@@ -12,5 +12,6 @@ interface AsteroidDao {
     suspend fun insertAll(vararg databaseAsteroids: DatabaseAsteroid)
 
     @Query("select * from asteroid_table")
-    suspend fun getAsteroids(): LiveData<List<DatabaseAsteroid>>
+    // No need to add suspend when returning LiveData
+    fun getAsteroids(): LiveData<List<DatabaseAsteroid>>
 }

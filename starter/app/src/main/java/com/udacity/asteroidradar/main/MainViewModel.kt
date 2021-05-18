@@ -3,8 +3,8 @@ package com.udacity.asteroidradar.main
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.udacity.asteroidradar.api.NasaApi
-import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
+import com.udacity.asteroidradar.network.NasaApi
+import com.udacity.asteroidradar.network.parseAsteroidsJsonResult
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 

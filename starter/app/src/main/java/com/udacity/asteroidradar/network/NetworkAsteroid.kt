@@ -1,12 +1,10 @@
-package com.udacity.asteroidradar.database
+package com.udacity.asteroidradar.network
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.database.DatabaseAsteroid
 
-@Entity(tableName = "asteroid_table")
-data class DatabaseAsteroid constructor(
-    @PrimaryKey val id: Long,
+data class NetworkAsteroid(
+    val id: Long,
     val codename: String,
     val closeApproachDate: String,
     val absoluteMagnitude: Double,
@@ -15,10 +13,9 @@ data class DatabaseAsteroid constructor(
     val distanceFromEarth: Double,
     val isPotentiallyHazardous: Boolean
 )
-
-fun List<DatabaseAsteroid>.asDomainModel(): List<Asteroid> {
+fun List<Asteroid>.asDatabaseModel() : Array<DatabaseAsteroid> {
     return map {
-        Asteroid(
+        DatabaseAsteroid (
             id = it.id,
             codename =it.codename,
             closeApproachDate = it.closeApproachDate,
@@ -27,8 +24,6 @@ fun List<DatabaseAsteroid>.asDomainModel(): List<Asteroid> {
             relativeVelocity = it.relativeVelocity,
             distanceFromEarth = it.distanceFromEarth,
             isPotentiallyHazardous = it.isPotentiallyHazardous
-        )
-    }
+            )
+    }.toTypedArray()
 }
-
-
