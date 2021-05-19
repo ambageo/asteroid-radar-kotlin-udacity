@@ -12,8 +12,7 @@ abstract class AsteroidsDatabase : RoomDatabase() {
 
     companion object {
 
-        @Volatile
-        private var INSTANCE: AsteroidsDatabase? = null
+        private lateinit var INSTANCE: AsteroidsDatabase
 
         /**
          * Helper function to get the database.
@@ -38,7 +37,7 @@ abstract class AsteroidsDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         AsteroidsDatabase::class.java,
-                        "asteroid_database"
+                        "asteroid_databasee"
                     )
                         // Wipes and rebuilds instead of migrating if no Migration object.
                         .fallbackToDestructiveMigration()
@@ -53,4 +52,6 @@ abstract class AsteroidsDatabase : RoomDatabase() {
         }
 
     }
+
+
 }

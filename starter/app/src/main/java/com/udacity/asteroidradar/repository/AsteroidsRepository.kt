@@ -22,6 +22,13 @@ class AsteroidsRepository(private val database: AsteroidsDatabase) {
             it.asDomainModel()
         }
 
+    /**
+     * Refresh the asteroids stored in the offline cache.
+     *
+     * This function uses the IO dispatcher to ensure the database insert database operation
+     * happens on the IO dispatcher. By switching to the IO dispatcher using `withContext` this
+     * function is now safe to call from any thread including the Main thread.
+     */
     suspend fun refreshAsteroids(){
         withContext(Dispatchers.IO){
             val result = NasaApi.retrofitService.getAsteroids()
