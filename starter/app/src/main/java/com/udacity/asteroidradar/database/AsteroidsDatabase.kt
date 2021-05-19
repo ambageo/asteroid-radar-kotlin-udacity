@@ -11,8 +11,8 @@ abstract class AsteroidsDatabase : RoomDatabase() {
     abstract val asteroidDao: AsteroidDao
 
     companion object {
-
-        private lateinit var INSTANCE: AsteroidsDatabase
+        @Volatile
+        private var INSTANCE: AsteroidsDatabase? = null
 
         /**
          * Helper function to get the database.

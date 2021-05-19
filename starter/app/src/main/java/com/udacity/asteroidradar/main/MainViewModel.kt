@@ -23,6 +23,8 @@ init {
     getNasaAsteroids()
 }
 
+    var asteroidsList = asteroidsRepository.asteroids
+
     private fun getNasaAsteroids() {
         viewModelScope.launch {
             try {
@@ -30,6 +32,7 @@ init {
                 val result = parseAsteroidsJsonResult(JSONObject(response))
                 asteroidsRepository.refreshAsteroids()
                 Log.d("GGG", "asteroids: ${result.size}")
+
             } catch (e: Exception){
                 Log.d("ggg", "error: $e")
             }
