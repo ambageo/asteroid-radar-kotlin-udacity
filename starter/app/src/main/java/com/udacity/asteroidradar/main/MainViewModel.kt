@@ -3,11 +3,11 @@ package com.udacity.asteroidradar.main
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.network.NasaApi
 import com.udacity.asteroidradar.database.AsteroidsDatabase
+import com.udacity.asteroidradar.network.NasaApiService
 import com.udacity.asteroidradar.network.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.repository.AsteroidsRepository
 import kotlinx.coroutines.launch
@@ -19,23 +19,39 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val asteroidsRepository = AsteroidsRepository(database)
 
+    private val _pictureOfDay = MutableLiveData<PictureOfDay>()
+    val pictureOfDay: LiveData<PictureOfDay>
+    get() = _pictureOfDay
+
 init {
     getNasaAsteroids()
+    getPictureOfDay()
 }
 
-    var asteroidsList = asteroidsRepository.asteroids
+    private fun getPictureOfDay() {
+        viewModelScope.launch {
+            try {
+                _pictureOfDay.value = NasaApi.retrofitService.getTodayImage()
+                Log.d("ggg", "${pictureOfDay.value?.mediaType} ${pictureOfDay.value?.title} ${pictureOfDay.value?.url}")
+            }catch (e: Exception){
+                Log.d("ggg", "error: $e")
+            }
+        }
+    }
+
+    private fun loadPicture(pictureUrl:String) {
+        TODO("Not yet implemented")
+    }
 
     private fun getNasaAsteroids() {
         viewModelScope.launch {
             try {
-                val response = NasaApi.retrofitService.getAsteroids()
-                val result = parseAsteroidsJsonResult(JSONObject(response))
                 asteroidsRepository.refreshAsteroids()
-                Log.d("GGG", "asteroids: ${result.size}")
-
             } catch (e: Exception){
                 Log.d("ggg", "error: $e")
             }
         }
     }
+
+    var asteroidsList = asteroidsRepository.asteroids
 }
