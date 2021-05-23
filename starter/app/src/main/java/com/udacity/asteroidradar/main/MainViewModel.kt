@@ -18,6 +18,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val database = AsteroidsDatabase.getInstance(application)
 
     private val asteroidsRepository = AsteroidsRepository(database)
+    var asteroidsList = asteroidsRepository.asteroids
 
     private val _pictureOfDay = MutableLiveData<PictureOfDay>()
     val pictureOfDay: LiveData<PictureOfDay>
@@ -39,10 +40,6 @@ init {
         }
     }
 
-    private fun loadPicture(pictureUrl:String) {
-        TODO("Not yet implemented")
-    }
-
     private fun getNasaAsteroids() {
         viewModelScope.launch {
             try {
@@ -53,5 +50,4 @@ init {
         }
     }
 
-    var asteroidsList = asteroidsRepository.asteroids
 }
