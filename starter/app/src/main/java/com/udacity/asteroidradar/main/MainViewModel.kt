@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
+import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.network.NasaApi
 import com.udacity.asteroidradar.database.AsteroidsDatabase
@@ -24,16 +25,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val pictureOfDay: LiveData<PictureOfDay>
     get() = _pictureOfDay
 
+    private val _navigateToAsteroidDetails = MutableLiveData<Asteroid>()
+    val navigateToAsteroidDetails: LiveData<Asteroid>
+    get() = _navigateToAsteroidDetails
+
 init {
     getNasaAsteroids()
     getPictureOfDay()
 }
+    fun onAsteroidClicked(item: Asteroid){
+        _navigateToAsteroidDetails.value = item
+    }
+
+    /*fun onNavigationCompleted(){
+        _navigateToAsteroidDetails.value = null
+    }*/
 
     private fun getPictureOfDay() {
         viewModelScope.launch {
             try {
                 _pictureOfDay.value = NasaApi.retrofitService.getTodayImage()
-                Log.d("ggg", "${pictureOfDay.value?.mediaType} ${pictureOfDay.value?.title} ${pictureOfDay.value?.url}")
             }catch (e: Exception){
                 Log.d("ggg", "error: $e")
             }

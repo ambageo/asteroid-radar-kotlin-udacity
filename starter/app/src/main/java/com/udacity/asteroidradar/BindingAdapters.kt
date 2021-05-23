@@ -5,6 +5,17 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 
+/*@BindingAdapter("codename")
+fun bindAsteroidCodename(textView:TextView, codename: String){
+    textView.text = codename
+}
+
+@BindingAdapter("closeApproachDate")
+fun bindAsteroidApproachDate(textView: TextView, date: String) {
+    textView.text = date
+}*/
+
+
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
     if (isHazardous) {

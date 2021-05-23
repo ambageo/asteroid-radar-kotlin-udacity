@@ -34,7 +34,6 @@ class AsteroidsRepository(private val database: AsteroidsDatabase) {
         withContext(Dispatchers.IO){
             val result = NasaApi.retrofitService.getAsteroids()
             val asteroidsList = parseAsteroidsJsonResult(JSONObject(result))
-            Log.d("GGG", "asteroids: ${asteroidsList.size}")
             database.asteroidDao.insertAll(*asteroidsList.asDatabaseModel())
         }
     }
