@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.R
+import com.udacity.asteroidradar.databinding.ListItemAsteroidBinding
 import kotlinx.android.synthetic.main.list_item_asteroid.view.*
 
 class AsteroidsAdapter(application: Application): RecyclerView.Adapter<AsteroidViewHolder>() {
@@ -22,15 +24,21 @@ class AsteroidsAdapter(application: Application): RecyclerView.Adapter<AsteroidV
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AsteroidViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.list_item_asteroid, parent,false)
-        return AsteroidViewHolder(view)
+        val binding = ListItemAsteroidBinding.inflate(layoutInflater, parent, false)
+        //val view = layoutInflater.inflate(R.layout.list_item_asteroid, parent,false)
+        return AsteroidViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: AsteroidViewHolder, position: Int) {
         val asteroid = asteroidsList[position]
         holder.codename.text = asteroid.codename
         holder.approachDate.text = asteroid.closeApproachDate
-        holder.isHazardous.text = asteroid.isPotentiallyHazardous.toString()
+        holder.isHazardous.setImageResource(
+            if(asteroid.isPotentiallyHazardous) {
+                R.drawable.ic_status_potentially_hazardous
+            } else {
+                R.drawable.ic_status_normal
+            })
 
     }
 
@@ -40,8 +48,8 @@ class AsteroidsAdapter(application: Application): RecyclerView.Adapter<AsteroidV
     }
 }
 
-class AsteroidViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView) {
-val codename: TextView = itemView.findViewById(R.id.codename)
-    val approachDate: TextView = itemView.findViewById(R.id.close_approach_date)
-    val isHazardous: TextView = itemView.findViewById(R.id.hazardous_icon)
+class AsteroidViewHolder(binding: ListItemAsteroidBinding) :RecyclerView.ViewHolder(binding.root) {
+    val codename: TextView = binding.codename
+    val approachDate: TextView = binding.closeApproachDate
+    val isHazardous: ImageView = binding.hazardousIcon
 }
