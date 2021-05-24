@@ -1,20 +1,10 @@
 package com.udacity.asteroidradar
 
+import android.content.res.Resources
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
-
-/*@BindingAdapter("codename")
-fun bindAsteroidCodename(textView:TextView, codename: String){
-    textView.text = codename
-}
-
-@BindingAdapter("closeApproachDate")
-fun bindAsteroidApproachDate(textView: TextView, date: String) {
-    textView.text = date
-}*/
-
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
@@ -29,8 +19,12 @@ fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
 fun bindDetailsStatusImage(imageView: ImageView, isHazardous: Boolean) {
     if (isHazardous) {
         imageView.setImageResource(R.drawable.asteroid_hazardous)
+        imageView.contentDescription =
+            Resources.getSystem().getString(R.string.potentially_hazardous_asteroid_image)
     } else {
         imageView.setImageResource(R.drawable.asteroid_safe)
+        imageView.contentDescription =
+            Resources.getSystem().getString(R.string.not_hazardous_asteroid_image)
     }
 }
 
@@ -54,12 +48,18 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
 
 @BindingAdapter("dailyImage")
 fun bindImageViewToDisplayImage(imageView: ImageView, imageUrl: String?) {
-    val context = imageView.context
     imageUrl?.let {
         Picasso.get()
             .load(imageUrl)
             .placeholder(R.drawable.placeholder_picture_of_day)
             .into(imageView)
     }
+}
 
+@BindingAdapter("pictureOfDay")
+fun bindImageViewToContentDescription(imageView: ImageView, title: String) {
+    imageView.contentDescription = String.format(
+        Resources.getSystem()
+            .getString(R.string.nasa_picture_of_day_content_description_format), title
+    )
 }

@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar.database
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.udacity.asteroidradar.Asteroid
@@ -8,6 +9,7 @@ import com.udacity.asteroidradar.Asteroid
 data class DatabaseAsteroid constructor(
     @PrimaryKey val id: Long,
     val codename: String,
+    @ColumnInfo(name = "approach_date")
     val closeApproachDate: String,
     val absoluteMagnitude: Double,
     val estimatedDiameter: Double,
