@@ -7,11 +7,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 import com.udacity.asteroidradar.detail.DetailFragment
+import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
+
+    private lateinit var adapter: AsteroidsAdapter
 
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
@@ -29,7 +33,7 @@ class MainFragment : Fragment() {
         setHasOptionsMenu(true)
 
         // We let the viewModel handle the click event
-        val adapter = AsteroidsAdapter(AsteroidListener {
+        adapter = AsteroidsAdapter(AsteroidListener {
            asteroid ->viewModel.onAsteroidClicked(asteroid)
         })
 
@@ -62,6 +66,9 @@ class MainFragment : Fragment() {
             R.id.show_week_asteroids -> viewModel.onWeekAsteroidsSelected()
             R.id.show_today_asteroid -> viewModel.onTodayAsteroidSelected()
             R.id.show_saved_asteroids -> viewModel.onSavedAsteroidsSelected()
+        }
+        viewModel.asteroidsList.observe(viewLifecycleOwner){
+            adapter.submitList(it)
         }
         return true
     }

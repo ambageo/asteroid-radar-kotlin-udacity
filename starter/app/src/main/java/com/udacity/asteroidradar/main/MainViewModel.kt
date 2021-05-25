@@ -67,24 +67,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onWeekAsteroidsSelected() {
-        Log.d("ggg", "weekly selected")
+        asteroidsList = asteroidsRepository.asteroids
     }
 
     fun onTodayAsteroidSelected() {
         val currentDate = getCurrentDate()
-        Log.d("ggg", "today selected, $currentDate")
 
-        //val todayAsteroids = database.asteroidDao.getTodayAsteroids(currentDate)
         asteroidsList.value?.filter { asteroid -> asteroid.closeApproachDate == currentDate }
-        Log.d("ggg", "today asteroids: ${asteroidsList.value?.size}")
+        asteroidsList = Transformations.map(asteroidsList){ list ->
+            list.filter {
+                it.closeApproachDate == currentDate
+            }
+        }
     }
 
     fun onSavedAsteroidsSelected() {
-        Log.d("ggg", "saved selected")
         asteroidsList = asteroidsRepository.asteroids
     }
 
-    fun getCurrentDate(): String {
+    private fun getCurrentDate(): String {
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
         return dateFormat.format(currentDate).toString()
