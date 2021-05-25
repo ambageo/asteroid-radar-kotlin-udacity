@@ -14,4 +14,7 @@ interface AsteroidDao {
     @Query("select * from asteroid_table order by approach_date")
     // No need to add suspend when returning LiveData
     fun getAsteroids(): LiveData<List<DatabaseAsteroid>>
+
+    @Query("select * from asteroid_table where approach_date = :todayDate")
+    fun getTodayAsteroids(todayDate: String): LiveData<List<DatabaseAsteroid>>
 }

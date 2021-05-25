@@ -17,14 +17,13 @@ fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
 
 @BindingAdapter("asteroidStatusImage")
 fun bindDetailsStatusImage(imageView: ImageView, isHazardous: Boolean) {
+    val context = imageView.context
     if (isHazardous) {
         imageView.setImageResource(R.drawable.asteroid_hazardous)
-        imageView.contentDescription =
-            Resources.getSystem().getString(R.string.potentially_hazardous_asteroid_image)
+        imageView.contentDescription = context.getString(R.string.potentially_hazardous_asteroid_image)
     } else {
         imageView.setImageResource(R.drawable.asteroid_safe)
-        imageView.contentDescription =
-            Resources.getSystem().getString(R.string.not_hazardous_asteroid_image)
+        imageView.contentDescription = context.getString(R.string.not_hazardous_asteroid_image)
     }
 }
 
@@ -56,10 +55,3 @@ fun bindImageViewToDisplayImage(imageView: ImageView, imageUrl: String?) {
     }
 }
 
-@BindingAdapter("pictureOfDay")
-fun bindImageViewToContentDescription(imageView: ImageView, title: String) {
-    imageView.contentDescription = String.format(
-        Resources.getSystem()
-            .getString(R.string.nasa_picture_of_day_content_description_format), title
-    )
-}
