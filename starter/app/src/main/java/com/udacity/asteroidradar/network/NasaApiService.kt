@@ -10,7 +10,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private const val API_KEY = "Acb3wXMWBcliyVZeNUFuY5j4YWXZ2ERNm6an7nYM"
+private const val API_KEY = "PUT YOUR OWN KEY HERE"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
