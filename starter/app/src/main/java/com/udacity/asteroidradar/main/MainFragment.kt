@@ -1,6 +1,7 @@
 package com.udacity.asteroidradar.main
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -71,8 +72,16 @@ class MainFragment : Fragment() {
             R.id.show_saved_asteroids -> viewModel.onSavedAsteroidsSelected()
         }
         viewModel.asteroidsList.observe(viewLifecycleOwner){
+
             adapter.submitList(it)
-           recyclerView.smoothScrollToPosition(0)
+
+            // Added a small so that smoothScrollToPosition works as intended
+            val handler = Handler()
+            val runnable = Runnable {
+                recyclerView.smoothScrollToPosition(0)
+            }
+            handler.postDelayed(runnable,100)
+
         }
         return true
     }
