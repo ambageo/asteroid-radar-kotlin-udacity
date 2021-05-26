@@ -2,6 +2,9 @@
 
 Asteroid Radar
 
+## Api Key
+The Api Key has been removed from the project. You need to put your own. To do so, go to the NasaApiService.kt . There you will find a private const val API_KEY where you will have to put your own key.
+
 ## Getting Started
 
 Asteroid Radar is an app to view the asteroids detected by NASA that pass near Earth, you can view all the detected asteroids in a period of time, their data (Size, velocity, distance to Earth) and if they are potentially hazardous.
