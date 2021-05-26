@@ -21,6 +21,8 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentMainBinding.inflate(inflater)
@@ -46,6 +48,7 @@ class MainFragment : Fragment() {
         })
 
         binding.asteroidRecycler.adapter = adapter
+         recyclerView = binding.asteroidRecycler
 
         viewModel.asteroidsList.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -69,6 +72,7 @@ class MainFragment : Fragment() {
         }
         viewModel.asteroidsList.observe(viewLifecycleOwner){
             adapter.submitList(it)
+           recyclerView.smoothScrollToPosition(0)
         }
         return true
     }
